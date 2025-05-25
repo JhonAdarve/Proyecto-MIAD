@@ -1,0 +1,196 @@
+2025-05-25 00:56:13,079 - __main__ - INFO - [main.setup_logging_from_config:88] - Sistema de logging configurado exitosamente desde la estructura YAML.
+2025-05-25 00:56:13,082 - __main__ - INFO - [main.cargar_configuracion_global:113] - Configuración global cargada exitosamente desde: C:\Users\jadarve\OneDrive - Grupo Bancolombia\Bancolombia\MIAD\Proyecto\Proyecto_Contugas - copia\config.yaml
+2025-05-25 00:56:13,083 - data_etl - INFO - [data_etl.cargar_configuracion_etl:36] - Configuración ETL cargada y aplicada en data_etl.py.
+2025-05-25 00:56:13,084 - clustering - INFO - [clustering.cargar_configuracion_clustering:27] - Configuración de clustering cargada en clustering.py.
+2025-05-25 00:56:13,086 - models.lstm_model - INFO - [lstm_model.cargar_configuracion_lstm:35] - Configuración LSTM cargada en lstm_model.py.
+2025-05-25 00:56:13,087 - alerts.alert_system - INFO - [alert_system.cargar_configuracion_alertas:24] - Configuración de alertas cargada en alert_system.py.
+2025-05-25 00:56:13,089 - evaluation.experiments - INFO - [experiments.cargar_configuracion_evaluacion:24] - Configuración de evaluación cargada en experiments.py.
+2025-05-25 00:56:13,090 - __main__ - INFO - [main.cargar_configuracion_global:121] - Configuración propagada a todos los módulos.
+2025-05-25 00:56:13,091 - __main__ - INFO - [main.run_full_pipeline:328] - ====== INICIANDO PIPELINE DE DETECCIÓN DE ANOMALÍAS ======
+2025-05-25 00:56:13,092 - __main__ - INFO - [main.run_full_pipeline:337] - 
+--- Etapa 1: Ejecutando Pipeline ETL ---
+2025-05-25 00:56:13,094 - data_etl - INFO - [data_etl.cargar_configuracion_etl:36] - Configuración ETL cargada y aplicada en data_etl.py.
+2025-05-25 00:56:13,096 - data_etl - INFO - [data_etl.cargar_datos_excel:130] - Iniciando carga de datos de consumo desde la carpeta: data/raw/
+2025-05-25 00:57:23,298 - data_etl - INFO - [data_etl.cargar_datos_excel:191] - Carga de datos completada. Total de datos consolidados: 847960 filas, 5 columnas, de 20 clientes.
+2025-05-25 00:57:23,310 - data_etl - INFO - [data_etl.validar_calidad_datos:448] - --- Iniciando Validación de Calidad de Datos (Etapa: Después de Carga Bruta) ---
+2025-05-25 00:57:23,311 - data_etl - INFO - [data_etl.validar_calidad_datos:454] - Dimensiones del DataFrame: (847960, 5)
+2025-05-25 00:57:23,399 - data_etl - INFO - [data_etl.validar_calidad_datos:460] - Completitud general: 100.00% de celdas no son NaN.
+2025-05-25 00:57:23,465 - data_etl - INFO - [data_etl.validar_calidad_datos:470] - No se encontraron NaNs en ninguna columna.
+2025-05-25 00:57:23,476 - data_etl - INFO - [data_etl.validar_calidad_datos:475] - Estadísticas descriptivas para columnas numéricas:
+2025-05-25 00:57:23,625 - data_etl - INFO - [data_etl.validar_calidad_datos:478] - 
+                count       mean        std       min        25%        50%        75%         max
+Presion      847960.0  16.072957   4.186408  2.934873  17.097350  17.570449  17.694254   20.307852
+Temperatura  847960.0  25.198239   3.790497 -5.257899  22.693027  25.379859  27.886244   50.019853
+Volumen      847960.0  62.328206  80.498112  0.000000   0.000000  21.773567  99.319649  577.413425
+2025-05-25 00:57:23,628 - data_etl - INFO - [data_etl.validar_calidad_datos:482] - --- Fin Validación de Calidad de Datos (Después de Carga Bruta) ---
+2025-05-25 00:57:23,629 - data_etl - INFO - [data_etl.limpiar_y_transformar_fecha:208] - Limpiando datos y transformando columna de fecha...
+2025-05-25 00:57:23,818 - data_etl - INFO - [data_etl.limpiar_y_transformar_fecha:228] - Se eliminaron 14 filas duplicadas (basadas en cliente_id y Fecha).
+2025-05-25 00:57:24,163 - data_etl - INFO - [data_etl.limpiar_y_transformar_fecha:232] - Columna de fecha procesada. Datos limpios y ordenados: 847946 filas.
+2025-05-25 00:57:24,165 - data_etl - INFO - [data_etl.validar_calidad_datos:448] - --- Iniciando Validación de Calidad de Datos (Etapa: Después de Limpieza de Fechas) ---
+2025-05-25 00:57:24,167 - data_etl - INFO - [data_etl.validar_calidad_datos:454] - Dimensiones del DataFrame: (847946, 5)
+2025-05-25 00:57:24,235 - data_etl - INFO - [data_etl.validar_calidad_datos:460] - Completitud general: 100.00% de celdas no son NaN.
+2025-05-25 00:57:24,307 - data_etl - INFO - [data_etl.validar_calidad_datos:470] - No se encontraron NaNs en ninguna columna.
+2025-05-25 00:57:24,324 - data_etl - INFO - [data_etl.validar_calidad_datos:475] - Estadísticas descriptivas para columnas numéricas:
+2025-05-25 00:57:24,479 - data_etl - INFO - [data_etl.validar_calidad_datos:478] - 
+                count       mean        std       min        25%        50%        75%         max
+Presion      847946.0  16.072967   4.186395  2.934873  17.097354  17.570446  17.694256   20.307852
+Temperatura  847946.0  25.198209   3.790516 -5.257899  22.692978  25.379804  27.886246   50.019853
+Volumen      847946.0  62.327764  80.498365  0.000000   0.000000  21.772860  99.319087  577.413425
+2025-05-25 00:57:24,481 - data_etl - INFO - [data_etl.validar_calidad_datos:482] - --- Fin Validación de Calidad de Datos (Después de Limpieza de Fechas) ---
+2025-05-25 00:57:24,498 - data_etl - INFO - [data_etl.calcular_cantidad_gas:70] - Calculando feature 'cantidad_gas_calculada' usando ley de gases (Z=1.0, R=8.314).
+2025-05-25 00:57:24,599 - data_etl - INFO - [data_etl.calcular_cantidad_gas:113] - Feature 'cantidad_gas_calculada' calculada. Min: 0.00, Max: 4114.87, Mean: 360.56, NaNs: 0
+2025-05-25 00:57:24,603 - data_etl - INFO - [data_etl.validar_calidad_datos:448] - --- Iniciando Validación de Calidad de Datos (Etapa: Después de Calcular Cantidad de Gas) ---
+2025-05-25 00:57:24,604 - data_etl - INFO - [data_etl.validar_calidad_datos:454] - Dimensiones del DataFrame: (847946, 6)
+2025-05-25 00:57:24,644 - data_etl - INFO - [data_etl.validar_calidad_datos:460] - Completitud general: 100.00% de celdas no son NaN.
+2025-05-25 00:57:24,683 - data_etl - INFO - [data_etl.validar_calidad_datos:470] - No se encontraron NaNs en ninguna columna.
+2025-05-25 00:57:24,718 - data_etl - INFO - [data_etl.validar_calidad_datos:475] - Estadísticas descriptivas para columnas numéricas:
+2025-05-25 00:57:24,961 - data_etl - INFO - [data_etl.validar_calidad_datos:478] - 
+                           count        mean         std       min        25%         50%         75%          max
+Presion                 847946.0   16.072967    4.186395  2.934873  17.097354   17.570446   17.694256    20.307852
+Temperatura             847946.0   25.198209    3.790516 -5.257899  22.692978   25.379804   27.886246    50.019853
+Volumen                 847946.0   62.327764   80.498365  0.000000   0.000000   21.772860   99.319087   577.413425
+cantidad_gas_calculada  847946.0  360.563833  526.601146  0.000000   0.000000  136.831308  447.263325  4114.867987
+2025-05-25 00:57:24,964 - data_etl - INFO - [data_etl.validar_calidad_datos:482] - --- Fin Validación de Calidad de Datos (Después de Calcular Cantidad de Gas) ---
+2025-05-25 00:57:24,966 - data_etl - INFO - [data_etl.tratar_valores_faltantes:251] - Tratando valores faltantes en columnas numéricas con el método: 'interpolacion_temporal' por cliente.
+2025-05-25 00:57:25,024 - data_etl - INFO - [data_etl.validar_calidad_datos:448] - --- Iniciando Validación de Calidad de Datos (Etapa: Después de Imputación de Faltantes) ---
+2025-05-25 00:57:25,026 - data_etl - INFO - [data_etl.validar_calidad_datos:454] - Dimensiones del DataFrame: (847946, 6)
+2025-05-25 00:57:25,091 - data_etl - INFO - [data_etl.validar_calidad_datos:460] - Completitud general: 100.00% de celdas no son NaN.
+2025-05-25 00:57:25,161 - data_etl - INFO - [data_etl.validar_calidad_datos:470] - No se encontraron NaNs en ninguna columna.
+2025-05-25 00:57:25,183 - data_etl - INFO - [data_etl.validar_calidad_datos:475] - Estadísticas descriptivas para columnas numéricas:
+2025-05-25 00:57:25,358 - data_etl - INFO - [data_etl.validar_calidad_datos:478] - 
+                           count        mean         std       min        25%         50%         75%          max
+Presion                 847946.0   16.072967    4.186395  2.934873  17.097354   17.570446   17.694256    20.307852
+Temperatura             847946.0   25.198209    3.790516 -5.257899  22.692978   25.379804   27.886246    50.019853
+Volumen                 847946.0   62.327764   80.498365  0.000000   0.000000   21.772860   99.319087   577.413425
+cantidad_gas_calculada  847946.0  360.563833  526.601146  0.000000   0.000000  136.831308  447.263325  4114.867987
+2025-05-25 00:57:25,361 - data_etl - INFO - [data_etl.validar_calidad_datos:482] - --- Fin Validación de Calidad de Datos (Después de Imputación de Faltantes) ---
+2025-05-25 00:57:25,362 - data_etl - INFO - [data_etl.identificar_y_tratar_outliers:369] - Identificando y tratando outliers en columnas numéricas con método: 'iqr' por cliente.
+2025-05-25 00:57:26,682 - data_etl - INFO - [data_etl.validar_calidad_datos:448] - --- Iniciando Validación de Calidad de Datos (Etapa: Después de Tratamiento de Outliers) ---
+2025-05-25 00:57:26,683 - data_etl - INFO - [data_etl.validar_calidad_datos:454] - Dimensiones del DataFrame: (847946, 6)
+2025-05-25 00:57:26,734 - data_etl - INFO - [data_etl.validar_calidad_datos:460] - Completitud general: 100.00% de celdas no son NaN.
+2025-05-25 00:57:26,782 - data_etl - INFO - [data_etl.validar_calidad_datos:470] - No se encontraron NaNs en ninguna columna.
+2025-05-25 00:57:26,816 - data_etl - INFO - [data_etl.validar_calidad_datos:475] - Estadísticas descriptivas para columnas numéricas:
+2025-05-25 00:57:27,027 - data_etl - INFO - [data_etl.validar_calidad_datos:478] - 
+                           count        mean         std       min        25%         50%         75%          max
+Presion                 847946.0   16.121035    4.196842  3.345695  17.373058   17.574859   17.694256    18.957052
+Temperatura             847946.0   25.198723    3.788899  6.442004  22.692978   25.379804   27.886246    44.533345
+Volumen                 847946.0   61.469049   79.872048  0.000000   0.000000   21.475008   96.797960   483.854766
+cantidad_gas_calculada  847946.0  354.376798  520.697784  0.000000   0.000000  135.032333  439.615548  3109.283192
+2025-05-25 00:57:27,031 - data_etl - INFO - [data_etl.validar_calidad_datos:482] - --- Fin Validación de Calidad de Datos (Después de Tratamiento de Outliers) ---
+2025-05-25 00:57:27,034 - data_etl - INFO - [data_etl.extraer_caracteristicas_temporales:404] - Extrayendo características temporales (hora, día, mes, cíclicas)...
+2025-05-25 00:57:27,647 - data_etl - INFO - [data_etl.extraer_caracteristicas_temporales:436] - Características temporales extraídas. Nuevas columnas: ['mes_cos', 'dia_semana', 'anio', 'es_findesemana', 'semana_anio', 'hora_dia', 'dia_semana_sin', 'mes', 'dia_semana_cos', 'dia_mes', 'hora_sin', 'mes_sin', 'dia_anio', 'trimestre', 'hora_cos']
+2025-05-25 00:57:27,650 - data_etl - INFO - [data_etl.validar_calidad_datos:448] - --- Iniciando Validación de Calidad de Datos (Etapa: Después de Ingeniería de Características Temporales) ---
+2025-05-25 00:57:27,651 - data_etl - INFO - [data_etl.validar_calidad_datos:454] - Dimensiones del DataFrame: (847946, 21)
+2025-05-25 00:57:27,767 - data_etl - INFO - [data_etl.validar_calidad_datos:460] - Completitud general: 100.00% de celdas no son NaN.
+2025-05-25 00:57:27,863 - data_etl - INFO - [data_etl.validar_calidad_datos:470] - No se encontraron NaNs en ninguna columna.
+2025-05-25 00:57:28,046 - data_etl - INFO - [data_etl.validar_calidad_datos:475] - Estadísticas descriptivas para columnas numéricas:
+2025-05-25 00:57:28,945 - data_etl - INFO - [data_etl.validar_calidad_datos:478] - 
+                           count         mean         std          min          25%           50%          75%          max
+Presion                 847946.0    16.121035    4.196842     3.345695    17.373058  1.757486e+01    17.694256    18.957052
+Temperatura             847946.0    25.198723    3.788899     6.442004    22.692978  2.537980e+01    27.886246    44.533345
+Volumen                 847946.0    61.469049   79.872048     0.000000     0.000000  2.147501e+01    96.797960   483.854766
+cantidad_gas_calculada  847946.0   354.376798  520.697784     0.000000     0.000000  1.350323e+02   439.615548  3109.283192
+hora_dia                847946.0    11.496421    6.929347     0.000000     5.000000  1.100000e+01    18.000000    23.000000
+dia_semana              847946.0     2.997290    1.998535     0.000000     1.000000  3.000000e+00     5.000000     6.000000
+dia_mes                 847946.0    15.785909    8.796198     1.000000     8.000000  1.600000e+01    23.000000    31.000000
+dia_anio                847946.0   184.042229  104.993433     1.000000    93.000000  1.840000e+02   275.000000   366.000000
+semana_anio             847946.0    26.747050   15.000382     1.000000    14.000000  2.700000e+01    40.000000    53.000000
+mes                     847946.0     6.552698    3.438721     1.000000     4.000000  7.000000e+00    10.000000    12.000000
+trimestre               847946.0     2.516106    1.116809     1.000000     2.000000  3.000000e+00     4.000000     4.000000
+anio                    847946.0  2021.015907    1.406036  2019.000000  2020.000000  2.021000e+03  2022.000000  2023.000000
+es_findesemana          847946.0     0.284931    0.451382     0.000000     0.000000  0.000000e+00     1.000000     1.000000
+hora_sin                847946.0     0.000178    0.707063    -1.000000    -0.707107  0.000000e+00     0.707107     1.000000
+hora_cos                847946.0     0.001742    0.707149    -1.000000    -0.707107  6.123234e-17     0.707107     1.000000
+dia_semana_sin          847946.0     0.001347    0.707205    -0.974928    -0.781831  0.000000e+00     0.781831     0.974928
+dia_semana_cos          847946.0    -0.000479    0.707008    -0.900969    -0.900969 -2.225209e-01     0.623490     1.000000
+mes_sin                 847946.0    -0.004294    0.704512    -1.000000    -0.500000 -2.449294e-16     0.500000     1.000000
+mes_cos                 847946.0    -0.005955    0.709655    -1.000000    -0.866025 -1.836970e-16     0.500000     1.000000
+2025-05-25 00:57:28,949 - data_etl - INFO - [data_etl.validar_calidad_datos:482] - --- Fin Validación de Calidad de Datos (Después de Ingeniería de Características Temporales) ---
+2025-05-25 00:58:08,531 - data_etl - INFO - [data_etl.pipeline_etl_completo:709] - Datos preprocesados guardados exitosamente en: C:\Users\jadarve\OneDrive - Grupo Bancolombia\Bancolombia\MIAD\Proyecto\Proyecto_Contugas - copia\data/preprocessed.csv
+2025-05-25 00:58:08,532 - data_etl - INFO - [data_etl.pipeline_etl_completo:713] - Pipeline ETL (pre-clustering y pre-escalado de modelo) completado.
+2025-05-25 00:58:08,583 - __main__ - INFO - [main.run_full_pipeline:346] - Pipeline ETL completado en 115.49 segundos. Shape: (847946, 21)
+2025-05-25 00:58:08,585 - __main__ - INFO - [main.run_full_pipeline:348] - 
+--- Etapa 2: Ejecutando Clustering de Clientes ---
+2025-05-25 00:58:08,587 - clustering - INFO - [clustering.cargar_configuracion_clustering:27] - Configuración de clustering cargada en clustering.py.
+2025-05-25 00:58:08,590 - clustering - INFO - [clustering.preparar_features_cliente_para_clustering:57] - Preparando características de cliente para clustering usando las siguientes definiciones: ['Volumen_mean', 'Volumen_std', 'Presion_median', 'cantidad_gas_calculada_mean']
+2025-05-25 00:58:08,956 - clustering - INFO - [clustering.preparar_features_cliente_para_clustering:153] - Revisando NaNs en features de cliente antes de la imputación final:
+2025-05-25 00:58:08,961 - clustering - INFO - [clustering.preparar_features_cliente_para_clustering:169] - Perfiles de cliente para clustering generados. Shape: (20, 4). NaNs imputados.
+2025-05-25 00:58:08,994 - clustering - INFO - [clustering.encontrar_k_optimo:195] - Determinando k óptimo para K-Means usando el método 'silhouette' en el rango [2, 6].
+2025-05-25 00:58:09,817 - clustering - INFO - [clustering.encontrar_k_optimo:227] - Para n_clusters = 2, Silhouette Score: 0.6367
+2025-05-25 00:58:09,844 - clustering - INFO - [clustering.encontrar_k_optimo:227] - Para n_clusters = 6, Silhouette Score: 0.6498
+2025-05-25 00:58:11,097 - clustering - INFO - [clustering.encontrar_k_optimo:251] - Gráfico de Silhouette Score guardado en: logs\clustering_diagnostics\silhouette_plot_evaluacion_k.png
+2025-05-25 00:58:11,099 - clustering - INFO - [clustering.encontrar_k_optimo:312] - k óptimo determinado/seleccionado por método 'silhouette': 6
+2025-05-25 00:58:11,102 - clustering - INFO - [clustering.aplicar_kmeans_y_asignar_clusters:356] - Aplicando K-Means con n_clusters = 6
+2025-05-25 00:58:11,119 - clustering - INFO - [clustering.aplicar_kmeans_y_asignar_clusters:369] - Asignaciones de cluster generadas. Distribución de clientes por cluster:
+cluster_id
+0    1
+1    7
+2    2
+3    5
+4    3
+5    2
+Name: count, dtype: int64
+2025-05-25 00:58:11,127 - clustering - INFO - [clustering.aplicar_kmeans_y_asignar_clusters:378] - Métricas de calidad para 6 clusters: Silhouette=0.650, Davies-Bouldin=0.329
+2025-05-25 00:58:11,130 - clustering - INFO - [clustering.visualizar_clusters:401] - Generando visualización de clusters...
+2025-05-25 00:58:11,784 - clustering - INFO - [clustering.visualizar_clusters:432] - Visualización de clusters (PCA) guardada en: logs\clustering_diagnostics\cluster_visualizacion_pca.png
+2025-05-25 00:58:20,883 - clustering - INFO - [clustering.visualizar_clusters:455] - Visualización de clusters (Pairplot) guardada en: logs\clustering_diagnostics\cluster_visualizacion_pairplot.png
+2025-05-25 00:58:20,891 - clustering - INFO - [clustering.pipeline_cliente_clustering:571] - Asignaciones de cluster guardadas en: data/client_clusters.csv
+2025-05-25 00:58:21,048 - __main__ - INFO - [main.run_full_pipeline:360] - Clustering de clientes completado en 12.45 segundos. Clusters: 6.
+2025-05-25 00:58:21,061 - __main__ - INFO - [main.run_full_pipeline:361] - Distribución de clientes por cluster:
+cluster_id
+0     43146
+1    292831
+2     84494
+3    215959
+4    128762
+5     82754
+Name: count, dtype: int64
+2025-05-25 00:58:21,065 - __main__ - INFO - [main.run_full_pipeline:363] - 
+--- Etapa 3: Entrenamiento de Modelos LSTM por Cluster (Paralelizado) ---
+2025-05-25 00:58:21,378 - __main__ - INFO - [main.run_full_pipeline:399] - Iniciando entrenamiento paralelo para 6 clusters usando 4 procesos.
+2025-05-25 02:41:00,351 - models.lstm_model - INFO - [lstm_model.cargar_modelo_lstm:350] - Modelo LSTM cargado exitosamente desde: C:\Users\jadarve\OneDrive - Grupo Bancolombia\Bancolombia\MIAD\Proyecto\Proyecto_Contugas - copia\models/trained/cluster_3\lstm_ae_model.keras
+2025-05-25 02:41:00,720 - models.lstm_model - INFO - [lstm_model.cargar_modelo_lstm:350] - Modelo LSTM cargado exitosamente desde: C:\Users\jadarve\OneDrive - Grupo Bancolombia\Bancolombia\MIAD\Proyecto\Proyecto_Contugas - copia\models/trained/cluster_1\lstm_ae_model.keras
+2025-05-25 02:41:01,042 - models.lstm_model - INFO - [lstm_model.cargar_modelo_lstm:350] - Modelo LSTM cargado exitosamente desde: C:\Users\jadarve\OneDrive - Grupo Bancolombia\Bancolombia\MIAD\Proyecto\Proyecto_Contugas - copia\models/trained/cluster_2\lstm_ae_model.keras
+2025-05-25 02:41:01,391 - models.lstm_model - INFO - [lstm_model.cargar_modelo_lstm:350] - Modelo LSTM cargado exitosamente desde: C:\Users\jadarve\OneDrive - Grupo Bancolombia\Bancolombia\MIAD\Proyecto\Proyecto_Contugas - copia\models/trained/cluster_0\lstm_ae_model.keras
+2025-05-25 02:41:01,739 - models.lstm_model - INFO - [lstm_model.cargar_modelo_lstm:350] - Modelo LSTM cargado exitosamente desde: C:\Users\jadarve\OneDrive - Grupo Bancolombia\Bancolombia\MIAD\Proyecto\Proyecto_Contugas - copia\models/trained/cluster_5\lstm_ae_model.keras
+2025-05-25 02:41:02,054 - models.lstm_model - INFO - [lstm_model.cargar_modelo_lstm:350] - Modelo LSTM cargado exitosamente desde: C:\Users\jadarve\OneDrive - Grupo Bancolombia\Bancolombia\MIAD\Proyecto\Proyecto_Contugas - copia\models/trained/cluster_4\lstm_ae_model.keras
+2025-05-25 02:41:02,056 - __main__ - INFO - [main.run_full_pipeline:429] - Entrenamiento de modelos LSTM por cluster (paralelo) completado en 6160.99 segundos.
+2025-05-25 02:41:02,059 - __main__ - INFO - [main.run_full_pipeline:431] - 
+--- Etapa 4: Detección de Anomalías con Modelos LSTM por Cluster ---
+2025-05-25 02:41:02,080 - __main__ - INFO - [main.run_full_pipeline:441] - 
+--- Detectando anomalías para Cluster ID: 3 (Usando LSTM) ---
+2025-05-25 02:41:02,247 - __main__ - INFO - [main.run_full_pipeline:489] - [Cluster 3 Criticidad PREP] Stats error normal (media, std): (0.09668615, 0.035592705)
+2025-05-25 02:43:26,922 - __main__ - INFO - [main.run_full_pipeline:519] - [Cluster 3 Criticidad CALL] Usando media_error_normal=0.096686, std_error_normal=0.035593 para clasificación.
+2025-05-25 02:43:26,938 - alerts.alert_system - INFO - [alert_system.clasificar_criticidad_anomalia:110] - Clasificación Criticidad Detalle: ScoreAnom=0.1968, MediaNormal=0.0967, StdNormal=0.0356 => DesvSigma=2.81. Umbrales (Baja:[1.0,1.75), Media:[1.75,2.75), Alta:[2.75,Inf)). Criticidad Asignada: Alta
+2025-05-25 02:50:35,367 - __main__ - INFO - [main.run_full_pipeline:534] - Detección de anomalías (LSTM por Cluster) completada en 573.30 segundos.
+2025-05-25 02:50:36,071 - alerts.alert_system - INFO - [alert_system.generar_reporte_anomalias_final:162] - Reporte de anomalías guardado exitosamente en: C:\Users\jadarve\OneDrive - Grupo Bancolombia\Bancolombia\MIAD\Proyecto\Proyecto_Contugas - copia\data/anomalies_detected.csv
+2025-05-25 02:50:36,075 - __main__ - INFO - [main.run_full_pipeline:552] - 
+--- Etapa 5: Evaluación del Sistema contra Ground Truth (C:\Users\jadarve\OneDrive - Grupo Bancolombia\Bancolombia\MIAD\Proyecto\Proyecto_Contugas - copia\data/ground_truth_data.csv) ---
+2025-05-25 02:50:36,098 - evaluation.experiments - INFO - [experiments.evaluar_sistema_completo:108] - Iniciando evaluación del sistema completo contra ground truth.
+2025-05-25 02:50:37,163 - evaluation.experiments - INFO - [experiments.calcular_metricas_rendimiento:97] - Métricas de rendimiento calculadas:
+total_muestras                        855610.000000
+positivos_reales                       11496.000000
+negativos_reales                      844114.000000
+positivos_predichos                    29664.000000
+verdaderos_positivos_tp                 8256.000000
+falsos_positivos_fp                    21408.000000
+verdaderos_negativos_tn               822706.000000
+falsos_negativos_fn                     3240.000000
+precision_anomalia                         0.278317
+recall_anomalia_sensibilidad               0.718163
+f1_score_anomalia                          0.401166
+tasa_falsos_positivos                      0.025362
+especificidad                              0.974638
+accuracy_general                           0.971192
+precision_clasificacion_criticidad         1.000000
+dtype: float64
+2025-05-25 02:50:37,174 - evaluation.experiments - INFO - [experiments.evaluar_sistema_completo:163] - Métricas de rendimiento del sistema guardadas en: C:\Users\jadarve\OneDrive - Grupo Bancolombia\Bancolombia\MIAD\Proyecto\Proyecto_Contugas - copia\evaluation/performance_metrics.csv
+2025-05-25 02:50:37,176 - evaluation.experiments - INFO - [experiments.evaluar_sistema_completo:169] - 
+--- Verificación de Criterios de Aceptación del Rendimiento ---
+2025-05-25 02:50:37,178 - evaluation.experiments - INFO - [experiments.evaluar_sistema_completo:174] - Tasa de Falsos Positivos: 0.025 (Requerido <= 0.15) - Cumple: True
+2025-05-25 02:50:37,180 - evaluation.experiments - INFO - [experiments.evaluar_sistema_completo:180] - Sensibilidad General (Detección Incidentes Reales): 0.718 (Requerido >= 0.8) - Cumple: False
+2025-05-25 02:50:37,182 - evaluation.experiments - INFO - [experiments.evaluar_sistema_completo:186] - Precisión Clasificación Criticidad (sobre TPs): 1.000 (Requerido >= 0.9) - Cumple: True
+2025-05-25 02:50:37,236 - __main__ - INFO - [main.run_full_pipeline:562] - Evaluación del sistema completada en 1.16 segundos. Métricas guardadas en C:\Users\jadarve\OneDrive - Grupo Bancolombia\Bancolombia\MIAD\Proyecto\Proyecto_Contugas - copia\evaluation/performance_metrics.csv
+2025-05-25 02:50:37,242 - __main__ - INFO - [main.run_full_pipeline:585] - Tiempos de ejecución del pipeline guardados en: C:\Users\jadarve\OneDrive - Grupo Bancolombia\Bancolombia\MIAD\Proyecto\Proyecto_Contugas - copia\logs/execution_times.yaml
+2025-05-25 02:50:37,244 - __main__ - INFO - [main.run_full_pipeline:590] - 
+====== PIPELINE COMPLETO FINALIZADO EN 6864.15 SEGUNDOS ======

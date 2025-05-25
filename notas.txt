@@ -1,0 +1,18 @@
+# 1. Navegar a la carpeta del proyecto
+cd C:\ruta\a\tu\proyecto\contugas_anomaly_detection
+
+# 2. Activar el entorno virtual
+Crea un entorno virtual (si aún no lo has hecho):
+python -m venv venv
+
+Activa el entorno virtual:
+.\venv\Scripts\Activate.ps1
+
+Instala las dependencias del proyecto:
+pip install -r requirements.txt
+
+# 3. Ejecutar el pipeline completo de procesamiento y modelado
+python main.py --config config.yaml
+
+# 4. (Después de que el pipeline termine) Ejecutar el dashboard
+python dashboard/app.py

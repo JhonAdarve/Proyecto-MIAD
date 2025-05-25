@@ -1,0 +1,122 @@
+# config.yaml
+# Archivo de configuración para el pipeline de detección de anomalías de Contugas
+
+rutas:
+  raw: 'data/raw/'
+  preprocesado: 'data/preprocessed.csv'
+  cluster_assignments: 'data/client_clusters.csv'
+  anomalias: 'data/anomalies_detected.csv'
+  resultados_evaluacion: 'evaluation/performance_metrics.csv' 
+  modelos_entrenados: 'models/trained/'
+  logs: 'logs/anomaly_detection.log'
+  ground_truth_data: 'data/ground_truth_data.csv' 
+  execution_times: 'logs/execution_times.yaml' 
+
+
+etl:
+  columna_fecha_original: 'Fecha'
+  columnas_numericas: ['Presion', 'Temperatura', 'Volumen'] 
+  metodo_faltantes: 'interpolacion_temporal'
+  metodo_outliers_prepro: 'iqr' 
+  factor_outliers_iqr: 1.5
+  factor_outliers_zscore: 3.5 
+  normalizacion: 'standard_scaler' 
+  features_temporales_adicionales:
+    ciclo_mensual: true
+    ciclo_semanal: true
+    ciclo_diario: true
+  test_size: 0.2
+  validation_size: 0.15 
+
+feature_engineering:
+  gas_law:
+    activo: true
+    R_gas_constant: 8.314 
+    default_Z_factor: 1.0 
+    output_feature_name: 'cantidad_gas_calculada' 
+
+clustering:
+  activo: true
+  features_cliente_para_clustering: ['Volumen_mean', 'Volumen_std', 'Presion_median', 'cantidad_gas_calculada_mean']
+  metodo_optimal_k: 'silhouette' 
+  rango_k: [2, 6] 
+  # n_clusters_fijo: 3 
+
+modelos:
+  features_entrenamiento: 
+    - 'Presion_scaled'
+    - 'Temperatura_scaled'
+    - 'Volumen_scaled'
+    - 'cantidad_gas_calculada_scaled' 
+    - 'hora_sin'
+    - 'hora_cos'
+    - 'dia_semana_sin'
+    - 'dia_semana_cos'
+    - 'mes_sin'
+    - 'mes_cos'
+
+  lstm_autoencoder:
+    seq_len: 24
+    param_grid: 
+      encoding_dim: [16] 
+      learning_rate: [0.001]
+      epochs: [3] # Ajustado a un valor más razonable para entrenamiento real
+      batch_size: [64] 
+    patience_es: 7 
+    patience_lr: 3  
+
+alertas:
+  sigma_factor_deteccion_inicial: 2.0 # Nuevo: Umbral sigma para detección inicial de anomalías
+  niveles_criticidad: 
+    Alta:
+      sigma_min: 3.0 # Ajustado ligeramente para tener más espacio para Media/Baja
+    Media:
+      sigma_min: 2.0 
+      sigma_max: 3.0 
+    Baja:
+      sigma_min: 1.5
+      sigma_max: 2.0
+    # 'Muy Baja' es el default si no alcanza 'Baja'
+
+evaluacion_rendimiento:
+  tasa_falsos_positivos_max: 0.15
+  sensibilidad_min_por_variable: 
+    Presion: 0.80
+    Temperatura: 0.80
+    Volumen: 0.80
+    cantidad_gas_calculada: 0.80 
+  precision_clasificacion_criticidad_min: 0.90
+  deteccion_incidentes_reales_min: 0.80 
+  latencia_procesamiento_max_minutos: 10 
+
+dashboard:
+  puerto: 8050
+  debug: true
+  meses_historia_default: 6
+  metricas_estadisticas: ['mean', 'std', 'min', 'max', 'median', 'quantile_25', 'quantile_75']
+  banda_normal_std_factor: 1.5 
+
+logging:
+  version: 1 
+  disable_existing_loggers: False
+  formatters:
+    simple:
+      format: "%(asctime)s - %(name)s - %(levelname)s - [%(module)s.%(funcName)s:%(lineno)d] - %(message)s"
+  handlers:
+    console:
+      class: logging.StreamHandler
+      level: INFO 
+      formatter: simple
+      stream: ext://sys.stdout
+    file:
+      class: logging.handlers.RotatingFileHandler
+      level: INFO 
+      formatter: simple
+      filename: logs/anomaly_detection.log 
+      maxBytes: 10485760 
+      backupCount: 5
+      encoding: utf8
+  root: 
+    level: INFO 
+    handlers: [console, file]
+

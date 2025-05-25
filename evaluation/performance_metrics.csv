@@ -1,0 +1,2 @@
+total_muestras,positivos_reales,negativos_reales,positivos_predichos,verdaderos_positivos_tp,falsos_positivos_fp,verdaderos_negativos_tn,falsos_negativos_fn,precision_anomalia,recall_anomalia_sensibilidad,f1_score_anomalia,tasa_falsos_positivos,especificidad,accuracy_general,precision_clasificacion_criticidad
+855610,11496,844114,29664,8256,21408,822706,3240,0.2783171521035599,0.7181628392484343,0.4011661807580175,0.025361503304056086,0.9746384966959439,0.9711924825563049,1.0

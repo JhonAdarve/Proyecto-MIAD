@@ -1,0 +1,5 @@
+anomaly_detection_seconds: 573.3
+clustering_pipeline_seconds: 12.45
+etl_pipeline_seconds: 115.49
+system_evaluation_seconds: 1.16
+training_lstm_parallel_seconds: 6160.99
